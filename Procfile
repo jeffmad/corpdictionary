@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/uberjar/corpdictionary-standalone.jar clojure.main -m corpdictionary.server
+web: java $JVM_OPTS -cp target/corpdictionary-0.0.1-SNAPSHOT-standalone.jar clojure.main -m corpdictionary.server
