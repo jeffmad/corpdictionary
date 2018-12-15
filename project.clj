@@ -17,6 +17,7 @@
                  [org.slf4j/jcl-over-slf4j "1.7.25"]
                  [org.slf4j/log4j-over-slf4j "1.7.25"]]
   :min-lein-version "2.0.0"
+  :uberjar-name "corpdictionary.jar"
   :resource-paths ["config", "resources"]
   ;; If you use HTTP/2 or ALPN, use the java-agent to pull in the correct alpn-boot dependency
   ;:java-agents [[org.mortbay.jetty.alpn/jetty-alpn-agent "2.0.5"]]
@@ -24,4 +25,3 @@
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.4"]]}
              :uberjar {:aot [corpdictionary.server]}}
   :main ^{:skip-aot true} corpdictionary.server)
-
