@@ -1,2 +1,1 @@
-web: java $JVM_OPTS -cp target/corpdictionary.jar -m corpdictionary.server
-                               
+web: java $JVM_OPTS -cp target/corpdictionary.jar
