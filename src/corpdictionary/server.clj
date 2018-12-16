@@ -13,6 +13,7 @@
                   (constantly (server/create-server
                                (-> service/service
                                    (assoc ::server/port (Integer. (or (System/getenv "PORT") 8080)))
+                                   (assoc ::server/host "0.0.0.0")
                                    (assoc ::server/secure-headers nil)
                                    (assoc ::server/allowed-origins (constantly true))
                                    (server/default-interceptors))))))
