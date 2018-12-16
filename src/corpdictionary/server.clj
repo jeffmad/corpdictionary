@@ -6,7 +6,25 @@
 
 ;; This is an adapted service map, that can be started and stopped
 ;; From the REPL you can call server/start and server/stop on this service
-(defonce runnable-service (server/create-server service/service))
+(defonce runnable-service nil)
+
+(defn create-server []
+  (alter-var-root #'runnable-service
+                  (constantly (server/create-server
+                               (-> service/service
+                                   (assoc ::server/port (Integer. (or (System/getenv "PORT") 8080)))
+                                   (assoc ::server/secure-headers nil)
+                                   (assoc ::server/allowed-origins (constantly true))
+                                   (server/default-interceptors))))))
+
+(defn start []
+  (when-not runnable-service
+    (create-server))
+  (server/start runnable-service))
+
+(defn stop []
+  (when runnable-service
+    (server/stop runnable-service)))
 
 (defn run-dev
   "The entry-point for 'lein run-dev'"
@@ -33,7 +51,7 @@
   "The entry-point for 'lein run'"
   [& args]
   (println "\nCreating your server...")
-  (server/start runnable-service))
+  (start))
 
 ;; If you package the service up as a WAR,
 ;; some form of the following function sections is required (for io.pedestal.servlet.ClojureVarServlet).
@@ -53,4 +71,3 @@
 ;;  [_]
 ;;  (server/servlet-destroy @servlet)
 ;;  (reset! servlet nil))
-
