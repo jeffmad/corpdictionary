@@ -10,7 +10,7 @@
 (deftest home-page-test
   (is (=
        (:body (response-for service :get "/"))
-       "Hello World!"))
+       "Hello World and Heroku!"))
   (is (=
        (:headers (response-for service :get "/"))
        {"Content-Type" "text/html;charset=UTF-8"
@@ -36,4 +36,3 @@
         "X-Download-Options" "noopen"
         "X-Permitted-Cross-Domain-Policies" "none"
         "Content-Security-Policy" "object-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'strict-dynamic' https: http:;"})))
-
