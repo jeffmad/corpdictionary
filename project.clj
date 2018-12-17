@@ -16,7 +16,8 @@
                  [org.slf4j/jul-to-slf4j "1.7.25"]
                  [org.slf4j/jcl-over-slf4j "1.7.25"]
                  [org.slf4j/log4j-over-slf4j "1.7.25"]]
-  :min-lein-version "2.0.0"
+  :min-lein-version "2.8.1"
+  :plugins [[lein-cljfmt "0.5.7"]]
   :uberjar-name "corpdictionary.jar"
   :resource-paths ["config", "resources"]
   ;; If you use HTTP/2 or ALPN, use the java-agent to pull in the correct alpn-boot dependency
