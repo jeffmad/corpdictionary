@@ -12,7 +12,7 @@
 
 (defn home-page
   [request]
-  (ring-resp/response "Hello World!"))
+  (ring-resp/response "Hello World and Heroku!"))
 
 ;; Defines "/" and "/about" routes with their associated :get handlers.
 ;; The interceptors defined after the verb map (e.g., {:get home-page}
@@ -76,4 +76,3 @@
                                         ;:key-password "password"
                                         ;:ssl-port 8443
                                         :ssl? false}})
-
