@@ -3,7 +3,34 @@
 # Check https://circleci.com/docs/2.0/language-clojure/ for more details
 #
 version: 2
+
+orbs:
+  slack: circleci/slack@0.1.12
+  heroku: circleci/heroku@0.0.4
+
 jobs:
+  format:
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: "-Xmx3200m"
+    docker:
+    - image: circleci/clojure:lein-2.8.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "project.clj" }}
+            - v1-dependencies-
+      - run: lein deps
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "project.clj" }}
+      - run: lein do cljfmt check, cljfmt check project.clj
+      - slack/notify:
+          message: Format is complete
+          mentions: 'jeffmad'
+          color: '#42e2f4'
   build:
     docker:
       # specify the version you desire here
@@ -40,3 +67,29 @@ jobs:
 
       # run tests!
       - run: lein test
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+
+workflows:
+  version: 2
+  format_build:
+    jobs:
+      - format
+      - build
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
