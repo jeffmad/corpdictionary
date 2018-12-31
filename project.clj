@@ -1,6 +1,6 @@
-(require 'cemerick.pomegranate.aether)
-(cemerick.pomegranate.aether/register-wagon-factory!
- "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
+;(require 'cemerick.pomegranate.aether)
+;(cemerick.pomegranate.aether/register-wagon-factory!
+; "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 (defproject corpdictionary "0.0.1"
   :description "the greatest enterprise software"
   :url "http://www.github.com/jeffmad/corpdictionary"
@@ -29,18 +29,18 @@
              :db ~(get (System/getenv) "DATABASE_URL")}
   :uberjar-name "corpdictionary.jar"
   :resource-paths ["config", "resources"]
-  :mirrors {
-            "central" {:name "Nexus"
-                       :url "http://voldemort:8081/repository/maven-public/"
-                       :repo-manager true}
-            #"clojars" {:name "Nexus"
-                       :url "http://voldemort:8081/repository/maven-public/"
-                        :repo-manager true}
-            }
-  :deploy-repositories [
-                 ["snapshots" "http://voldemort:8081/repository/maven-snapshots"]
-                 ["releases" "http://voldemort:8081/repository/maven-releases"]
-                ]
+  ;:mirrors {
+  ;          "central" {:name "Nexus"
+  ;                     :url "http://voldemort:8081/repository/maven-public/"
+  ;                     :repo-manager true}
+  ;          #"clojars" {:name "Nexus"
+  ;                     :url "http://voldemort:8081/repository/maven-public/"
+  ;                      :repo-manager true}
+  ;          }
+  ;:deploy-repositories [
+  ;               ["snapshots" "http://voldemort:8081/repository/maven-snapshots"]
+  ;               ["releases" "http://voldemort:8081/repository/maven-releases"]
+  ;              ]
   ;; If you use HTTP/2 or ALPN, use the java-agent to pull in the correct alpn-boot dependency
   ;:java-agents [[org.mortbay.jetty.alpn/jetty-alpn-agent "2.0.5"]]
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "corpdictionary.server/run-dev"]}
