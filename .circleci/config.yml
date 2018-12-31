@@ -142,6 +142,7 @@ workflows:
   deploy-orb:
     jobs:
       - build
+      - migrate
       - deployorb:
           requires:
             - build
