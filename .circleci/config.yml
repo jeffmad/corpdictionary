@@ -59,6 +59,10 @@ jobs:
           - v1-dependencies-
       # run tests!
       - run: lein test :integration
+      - slack/notify:
+          message: Integration Tests Ran
+          #mentions: 'jeffmad'
+          color: '#42e2f4'
   build:
     docker:
       # specify the version you desire here
@@ -133,6 +137,10 @@ jobs:
           name: run migrations
           command: |
             lein migratus migrate
+      - slack/notify:
+          message: DB Migration Complete
+          #mentions: 'jeffmad'
+          color: '#42e2f4'
   deploy:
     docker:
       - image: buildpack-deps:trusty
@@ -151,20 +159,24 @@ jobs:
           only-branch: master
 
 workflows:
-  version: 2
-  format_build:
+#  version: 2
+#  format_build:
+#    jobs:
+#      - format
+#      - build:
+#          requires:
+#            - format
+  deploy-orb:
     jobs:
       - format
       - build:
           requires:
             - format
-  deploy-orb:
-    jobs:
-      - build
-      - migrate
-      - deployorb:
+      - migrate:
           requires:
             - build
+      - deployorb:
+          requires:
             - migrate
           filters:
             branches:
