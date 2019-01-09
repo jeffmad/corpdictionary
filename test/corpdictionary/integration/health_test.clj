@@ -9,7 +9,6 @@
 (defn read-env []
   (reduce (fn [acc [k v]] (assoc acc (keyword (->kebab-case k)) v)) {} (System/getenv)))
 
-
 (defn home [env]
   (let [url (str (:base-url env) "/")]
     (http/get url {:throw-exceptions false
