@@ -20,7 +20,10 @@
                  [org.slf4j/jcl-over-slf4j "1.7.25"]
                  [org.slf4j/log4j-over-slf4j "1.7.25"]
                  [migratus "1.2.0"]
-                 [org.postgresql/postgresql "42.2.5"]]
+                 [org.postgresql/postgresql "42.2.5"]
+                 [cheshire "5.8.1"]
+                 [clj-http "3.9.1"]
+                 [camel-snake-kebab "0.4.0"]]
   :min-lein-version "2.8.1"
   :plugins [[lein-cljfmt "0.5.7"]
             [migratus-lein "0.7.0"]]
@@ -29,6 +32,8 @@
              :db ~(get (System/getenv) "DATABASE_URL")}
   :uberjar-name "corpdictionary.jar"
   :resource-paths ["config", "resources"]
+  :test-selectors {:default (complement :integration)
+                   :integration :integration}
   ;:mirrors {
   ;          "central" {:name "Nexus"
   ;                     :url "http://voldemort:8081/repository/maven-public/"
